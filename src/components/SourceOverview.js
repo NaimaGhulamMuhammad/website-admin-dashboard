@@ -7,7 +7,7 @@ const SourceOverview = ({ sourceData }) => (
   <Container>
     <Row>
       <Col className='heading'>
-        <h2>Source Overview</h2>
+        <h3>Source Overview</h3>
       </Col>
     </Row>
     <Row>

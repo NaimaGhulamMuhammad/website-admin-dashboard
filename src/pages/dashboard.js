@@ -17,6 +17,7 @@ const config = {
   spreadsheetId: "1vcDPrMexD8bxNwwzK9IxF8wch6Hfezq2eooJACDiqgg",
 };
 const url = `https://sheets.googleapis.com/v4/spreadsheets/${config.spreadsheetId}/values:batchGet?ranges=Sheet1&majorDimension=ROWS&key=${config.apiKey}`;
+
 class Dashboard extends Component {
   constructor() {
     super();
@@ -35,6 +36,7 @@ class Dashboard extends Component {
       bounceRate: null,
     };
   }
+
   getData = (value) => {
     const data = this.state.items;
     const datalen = data.length;

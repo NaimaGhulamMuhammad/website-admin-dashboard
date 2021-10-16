@@ -10,7 +10,12 @@ const Header = ({ options, onChange, value }) => (
         <h2> Dashboard</h2>
       </Col>
       <Col>
-        <Dropdown options={options} onChange={onChange} value={value} />
+        <Dropdown
+          options={options}
+          onChange={onChange}
+          value={value}
+          className='dropdown'
+        />
       </Col>
     </Row>
   </Container>

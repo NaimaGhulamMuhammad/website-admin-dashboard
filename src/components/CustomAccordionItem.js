@@ -3,16 +3,13 @@ import { Container, Accordion, Col, Row } from "react-bootstrap";
 
 const CustomAccordionItem = (props) => (
   <Container>
-    <Row>
-      <Accordion.Toggle
-        eventKey={props.itemNumber}
-        className='accordion-button'
-      >
+    <Accordion.Toggle eventKey={props.itemNumber} style={{ width: "100%" }}>
+      <Row>
         <Col className='heading'>
-          <h2>{props.title}</h2>
+          <h3>{props.title}</h3>
         </Col>
-      </Accordion.Toggle>
-    </Row>
+      </Row>
+    </Accordion.Toggle>
 
     <Accordion.Collapse eventKey={props.itemNumber}>
       {props.children}
