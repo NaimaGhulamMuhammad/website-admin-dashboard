@@ -15,16 +15,16 @@ function DoughnutWidget(props) {
       // Chart Configuration
       chart: {
         bgColor: "#2a2a2a",
-        theme: "fusion" //Set the theme for your chart
+        theme: "fusion", //Set the theme for your chart
       },
       // Chart Data - from step 2
-      data: props.data
-    }
+      data: props.data,
+    },
   };
   return (
-    <div className="widget chart">
-      <div className="title">{props.title}</div>
-      <div className="widgetValue">
+    <div className='widget chart'>
+      <div className='title'>{props.title}</div>
+      <div className='widgetValue'>
         <ReactFC {...chartConfigs} />
       </div>
     </div>

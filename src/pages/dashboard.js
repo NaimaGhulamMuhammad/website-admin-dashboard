@@ -1,17 +1,20 @@
 import React, { Component } from "react";
-import TextWidget from "./textWidget";
-import BarWidget from "./barWidget";
-import DoughnutWidget from "./doughnutWidget";
-import Dropdown from "react-dropdown";
-import "react-dropdown/style.css";
-import { Col, Row, Container, Accordion } from "react-bootstrap";
-import 'bootstrap/dist/css/bootstrap.min.css';
+import "bootstrap/dist/css/bootstrap.min.css";
+
+import {
+  CustomAccordion,
+  Header,
+  PageUserOverview,
+  SourceOverview,
+  CustomAccordionItem,
+} from "../components";
+
 import "./dashboard.css";
 
 //excel import
 const config = {
   apiKey: "AIzaSyDMu-Vw30ykPPmFT3cXeunzKEi4EahzglI",
-  spreadsheetId: "1vcDPrMexD8bxNwwzK9IxF8wch6Hfezq2eooJACDiqgg"
+  spreadsheetId: "1vcDPrMexD8bxNwwzK9IxF8wch6Hfezq2eooJACDiqgg",
 };
 const url = `https://sheets.googleapis.com/v4/spreadsheets/${config.spreadsheetId}/values:batchGet?ranges=Sheet1&majorDimension=ROWS&key=${config.apiKey}`;
 class Dashboard extends Component {
@@ -29,7 +32,7 @@ class Dashboard extends Component {
       chartData: [],
       newUsers: null,
       pageviews: null,
-      bounceRate: null
+      bounceRate: null,
     };
   }
   getData = (value) => {
@@ -54,23 +57,23 @@ class Dashboard extends Component {
         newUsers = data[i].new_users;
         pageViews = data[i].page_views;
         bounceRate = data[i].bounce_rate;
-         console.log(data[i]["month"])
+        console.log(data[i]["month"]);
         chartData.push(
           {
             label: "Organuic",
-            value: organicSource
+            value: organicSource,
           },
           {
             label: " direct",
-            value: directSource
+            value: directSource,
           },
           {
             label: "referral",
-            value: referralSource
+            value: referralSource,
           },
           {
             label: "Social",
-            value: socialSource
+            value: socialSource,
           }
         );
       }
@@ -85,7 +88,7 @@ class Dashboard extends Component {
       users: users,
       newUsers: newUsers,
       bounceRate: bounceRate,
-      pageViews: pageViews
+      pageViews: pageViews,
     });
     console.log(this.state.chartData);
   };
@@ -115,7 +118,7 @@ class Dashboard extends Component {
           {
             items: row,
             dropdowns: dropdownMenu,
-            selected: "Jan 2018"
+            selected: "Jan 2018",
           },
           () => this.getData("Jan 2018")
         );
@@ -126,111 +129,50 @@ class Dashboard extends Component {
     const sourceData = [
       {
         label: "Organic ",
-        value: this.state.organic
+        value: this.state.organic,
       },
       {
         label: "Direct ",
-        value: this.state.direct
+        value: this.state.direct,
       },
       {
         label: "Referral ",
-        value: this.state.referral
+        value: this.state.referral,
       },
       {
         label: "Social",
-        value: this.state.social
-      }
+        value: this.state.social,
+      },
     ];
     const userData = [
       {
         label: "Users ",
-        value: this.state.users
+        value: this.state.users,
       },
       {
         label: "New users ",
-        value: this.state.newUsers
-      }
+        value: this.state.newUsers,
+      },
     ];
     return (
       <>
-        <Container fluid className="head">
-          <Row>
-            <Col lg={6} xs={6}>
-             <h2> Dashboard</h2>
-            </Col>
-            <Col>
-              <Dropdown
-                options={this.state.dropdowns}
-                onChange={this.updateContent}
-                value={this.state.selected}
-              />
-            </Col>
-          </Row>
-        </Container >
-        <Container >
-        
-          <Row>
-          
-            <Col className="heading">
-              <h2>Source Overview</h2>
-            </Col>
-          
-          </Row>
-          
-          <Row>
-            
-              <Col lg={3}>
-                <TextWidget title="Organic Source" value={this.state.organic} />
-              </Col>
-              <Col lg={3}>
-                <TextWidget title="Direct Source" value={this.state.direct} />
-              </Col>
-             
-              <Col lg={3}>
-                <TextWidget
-                  title="Referral Source"
-                  value={this.state.referral}
-                />
-             </Col>
-             <Col lg={3}>
-                <TextWidget title="Social Source" value={this.state.social} />
-              </Col>
-            <Col >
-              <BarWidget title="Sources overview" data={sourceData} />
-            </Col>
-           
-          </Row>
-          <Accordion defaultActiveKey="0">
-            <Container>
-          <Row>
-          <Accordion.Toggle eventKey="0">
-            <Col className="heading">
-              <h2>Page and Users Overview</h2>
-            </Col>
-            </Accordion.Toggle>
-          </Row>
-          <Accordion.Collapse eventKey="0">
-          <Row>
-            <Col lg={6}>
-              <Col>
-                <TextWidget title="Page Views" value={this.state.pageViews} />
-              
-                <TextWidget title="Users" value={this.state.users} />
-                <TextWidget
-                  title="New Users"
-                  value={this.state.newUsers}
-                />
-              </Col>
-            </Col>
-            <Col lg={6}>
-              <DoughnutWidget title="Users overview" data={userData} />
-              <TextWidget title="Bounce Rate" value={this.state.bounceRate} />
-            </Col>
-          </Row>
-          </Accordion.Collapse>
-          </Container>
-          </Accordion>
-        </Container>
+        <Header
+          options={this.state.dropdowns}
+          onChange={this.updateContent}
+          value={this.state.selected}
+        />
+        <SourceOverview sourceData={sourceData} />
+        <CustomAccordion defaultActiveKey='0'>
+          <CustomAccordionItem itemNumber='0' title='Page and User Overview'>
+            <PageUserOverview
+              userData={userData}
+              pageViews={this.state.pageViews}
+              users={this.state.users}
+              newUsers={this.state.newUsers}
+              bounceRate={this.state.bounceRate}
+            />
+          </CustomAccordionItem>
+        </CustomAccordion>
       </>
     );
   }
