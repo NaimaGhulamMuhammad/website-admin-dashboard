@@ -4,9 +4,9 @@ import "bootstrap/dist/css/bootstrap.min.css";
 import {
   CustomAccordion,
   Header,
-  PageUserOverview,
-  SourceOverview,
+  ComparisonTable,
   CustomAccordionItem,
+  Overview,
 } from "../components";
 
 import "./dashboard.css";
@@ -24,7 +24,7 @@ class Dashboard extends Component {
     this.state = {
       items: [],
       dropdowns: [],
-      selected: "jan 2018",
+      selected: "Jan 2018",
       organic: null,
       direct: null,
       referral: null,
@@ -32,7 +32,7 @@ class Dashboard extends Component {
       users: null,
       chartData: [],
       newUsers: null,
-      pageviews: null,
+      pageViews: null,
       bounceRate: null,
     };
   }
@@ -41,20 +41,20 @@ class Dashboard extends Component {
     const data = this.state.items;
     const datalen = data.length;
     let chartData = [];
-    let organicSource = 0;
-    let directSource = 0;
-    let referralSource = 0;
-    let socialSource = 0;
+    let organic = 0;
+    let direct = 0;
+    let referral = 0;
+    let social = 0;
     let users = 0;
     let newUsers = 0;
     let pageViews = 0;
     let bounceRate = 0;
     for (let i = 0; i < datalen; i++) {
       if (value === data[i]["month"]) {
-        organicSource = data[i].organic_source;
-        directSource = data[i].direct_source;
-        referralSource = data[i].referral_source;
-        socialSource = data[i].social_source;
+        organic = data[i].organic_source;
+        direct = data[i].direct_source;
+        referral = data[i].referral_source;
+        social = data[i].social_source;
         users = data[i].users;
         newUsers = data[i].new_users;
         pageViews = data[i].page_views;
@@ -63,41 +63,67 @@ class Dashboard extends Component {
         chartData.push(
           {
             label: "Organuic",
-            value: organicSource,
+            value: organic,
           },
           {
-            label: " direct",
-            value: directSource,
+            label: "Direct",
+            value: direct,
           },
           {
-            label: "referral",
-            value: referralSource,
+            label: "Referral",
+            value: referral,
           },
           {
             label: "Social",
-            value: socialSource,
+            value: social,
           }
         );
       }
     }
+    return {
+      organic,
+      direct,
+      referral,
+      social,
+      chartData,
+      users,
+      newUsers,
+      bounceRate,
+      pageViews,
+    };
+  };
 
+  setCurrentDataSet = ({
+    organic,
+    direct,
+    referral,
+    social,
+    chartData,
+    users,
+    newUsers,
+    bounceRate,
+    pageViews,
+  }) => {
     this.setState({
-      organic: organicSource,
-      direct: directSource,
-      referral: referralSource,
-      social: socialSource,
-      chartData: chartData,
-      users: users,
-      newUsers: newUsers,
-      bounceRate: bounceRate,
-      pageViews: pageViews,
+      organic,
+      direct,
+      referral,
+      social,
+      chartData,
+      users,
+      newUsers,
+      bounceRate,
+      pageViews,
     });
     console.log(this.state.chartData);
   };
+
   updateContent = (event) => {
-    this.getData(event.value);
+    const data = this.getData(event.value);
+    this.setCurrentDataSet(data);
     this.setState({ selected: event.value });
   };
+
   componentDidMount() {
     fetch(url)
       .then((response) => response.json())
@@ -116,14 +142,14 @@ class Dashboard extends Component {
           dropdownMenu.push(row[i].month);
         }
         dropdownMenu = Array.from(new Set(dropdownMenu)).reverse();
-        this.setState(
-          {
-            items: row,
-            dropdowns: dropdownMenu,
-            selected: "Jan 2018",
-          },
-          () => this.getData("Jan 2018")
-        );
+        this.setState({
+          items: row,
+          dropdowns: dropdownMenu,
+        });
+        this.updateContent({
+          label: this.state.selected,
+          value: this.state.selected,
+        });
       });
   }
 
@@ -152,7 +178,7 @@ class Dashboard extends Component {
         value: this.state.users,
       },
       {
-        label: "New users ",
+        label: "New Users ",
         value: this.state.newUsers,
       },
     ];
@@ -163,16 +189,17 @@ class Dashboard extends Component {
           onChange={this.updateContent}
           value={this.state.selected}
         />
-        <SourceOverview sourceData={sourceData} />
+        <Overview
+          sourceData={sourceData}
+          userData={userData}
+          pageViews={this.state.pageViews}
+          users={this.state.users}
+          newUsers={this.state.newUsers}
+          bounceRate={this.state.bounceRate}
+        />
         <CustomAccordion defaultActiveKey='0'>
-          <CustomAccordionItem itemNumber='0' title='Page and User Overview'>
-            <PageUserOverview
-              userData={userData}
-              pageViews={this.state.pageViews}
-              users={this.state.users}
-              newUsers={this.state.newUsers}
-              bounceRate={this.state.bounceRate}
-            />
+          <CustomAccordionItem itemNumber='0' title='Compare Stats'>
+            <ComparisonTable getData={this.getData} currentState={this.state} />
           </CustomAccordionItem>
         </CustomAccordion>
       </>
