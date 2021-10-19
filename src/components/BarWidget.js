@@ -21,7 +21,7 @@ function BarWidget(props) {
     },
   };
   return (
-    <div className='widget chart'>
+    <div className='widget chart shadow-lg'>
       <ReactFC {...chartConfigs} />
     </div>
   );

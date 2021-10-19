@@ -2,7 +2,7 @@ import React from "react";
 
 function TextWidget(props) {
   return (
-    <div className="widget">
+    <div className="widget shadow-lg">
       <div className="title">{props.title}</div>
       <div className="widgetValue">
         <div className="value">{props.value}</div>
