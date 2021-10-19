@@ -1,67 +1,74 @@
 @import url("https://fonts.googleapis.com/css2?family=Nunito:wght@200;600;700&display=swap");
+
 .widget {
   font-family: nunito;
   background-color: white;
-  margin: 2%;
   margin-bottom: 3%;
-  border-radius: 5px;
-  border-left: 3px solid #b00426;
   text-align: left;
-  background-color: #2a2a2a;
 }
 .chart {
   width: auto;
-  height: 200px;
 }
 .title {
   font-size: 18px;
-
   padding: 1%;
   margin-bottom: 8px;
   color: white;
   padding-left: 20px;
-  background-color: #b00426;
-  border-top-left-radius: 2px;
-  border-top-right-radius: 2px;
+  background-color: #f4b400;
 }
+
 .value {
   font-size: 35px;
   font-weight: bold;
-  color: white;
   padding: 2%;
   padding-left: 20px;
 }
-text {
-  fill: white;
-}
+
 button {
   border: none;
   outline: none;
   background: transparent;
-  width: auto;
+  width: "100%";
 }
+
+button:focus {
+  outline: none;
+}
+
 .desc {
   text-align: left;
   font-size: x-small;
   font-weight: 500;
 }
-h2 {
+
+h2,
+h3 {
   color: white;
-  padding-left: 20px;
+  margin: 10px 0px;
 }
+
 .head.container-fluid {
-  background-color: #b00426;
-  padding: 5px;
+  background-color: #4285f4;
 }
-.Dropdown-root {
+
+.comparison-dropdown {
+  width: "100%";
+  float: "left";
+  margin: 10px;
+}
+
+.dropdown {
+  margin: 10px;
   position: relative;
   width: 30%;
   float: right;
 }
+
 .heading {
-  background-color: #b00426;
+  background-color: #4285f4;
   margin: 20px;
-  border-radius: 10px;
-  text-align: center;
+  text-align: left;
   color: white;
+  width: "100%";
 }
