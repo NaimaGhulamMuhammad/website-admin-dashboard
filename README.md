@@ -2,7 +2,8 @@
 
 A simple Admin Panel project to demonstrate the website Users and Traffic integrated with API.
 
-![image](https://user-images.githubusercontent.com/63257312/137098741-e7b01eab-fbbf-4f1e-9f5b-d0b0d589e3c1.png)
+![image](https://user-images.githubusercontent.com/63257312/138755920-ba26f1d3-30bb-43ec-be82-854c340c15bf.png)
+
 
 
 ### Feel free to customize it and make it look more attractive.
